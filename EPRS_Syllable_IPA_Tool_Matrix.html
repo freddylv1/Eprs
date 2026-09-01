@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<!-- saved from url=(0105)https://ais-dev-zguemtpt3b22rch2rtgroa-561243370080.asia-east1.run.app/EPRS_Syllable_IPA_Tool_Matrix.html -->
+<html lang="zh-TW" style="--font-scale: 1.3;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EPRS 英文發音知識系統 - 音節切分與音標推導全套工具表</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
+    :root {
+      --font-scale: 1.15;
+      --base-font-size: 15px;
+      --table-font-size: 14.5px;
+      --ipa-font-size: 16px;
+      --code-font-size: 13.5px;
+      --title-font-size: 18px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", Arial, sans-serif;
+      margin: 0;
+      padding: 24px;
+      background-color: #f8fafc;
+      color: #0f172a;
+      line-height: 1.65;
+      font-size: calc(var(--base-font-size) * var(--font-scale));
+      -webkit-font-smoothing: antialiased;
+      transition: font-size 0.15s ease;
+    }
+
+    /* 頂部全域工具列 */
+    .top-navbar {
+      background-color: #0f172a;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+    }
+    .brand-title {
+      font-size: calc(19px * var(--font-scale));
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-subtitle {
+      margin: 4px 0 0 0;
+      font-size: calc(12.5px * var(--font-scale));
+      color: #94a3b8;
+    }
+    .nav-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* 字級控制列 */
+    .font-scale-control {
+      display: inline-flex;
+      align-items: center;
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 4px 8px;
+      border-radius: 8px;
+      gap: 6px;
+    }
+    .font-scale-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+    .font-scale-btn-group {
+      display: inline-flex;
+      gap: 3px;
+    }
+    .font-btn {
+      background: #334155;
+      color: #f1f5f9;
+      border: 1px solid #475569;
+      padding: 4px 9px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .font-btn:hover {
+      background: #2563eb;
+      color: white;
+      border-color: #3b82f6;
+    }
+    .font-btn.active {
+      background: #2563eb;
+      color: white;
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease-in-out;
+      border: none;
+    }
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-emerald {
+      background: #059669;
+      color: white;
+    }
+    .btn-emerald:hover { background: #047857; }
+
+    /* 快速跳轉錨點列 */
+    .quick-jump-bar {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .quick-jump-label {
+      font-weight: 700;
+      font-size: calc(13.5px * var(--font-scale));
+      color: #475569;
+      margin-right: 4px;
+    }
+    .jump-tag {
+      background: #f1f5f9;
+      color: #1e293b;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: calc(13px * var(--font-scale));
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s;
+      border: 1px solid #e2e8f0;
+    }
+    .jump-tag:hover {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    /* 搜尋過濾區 */
+    .search-box-wrapper {
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: calc(14.5px * var(--font-scale));
+      color: #0f172a;
+    }
+    .search-counter {
+      font-size: calc(12.5px * var(--font-scale));
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    /* 卡片與區塊 */
+    .section-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+    .section-title {
+      font-size: calc(var(--title-font-size) * var(--font-scale));
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #2563eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .section-desc {
+      font-size: calc(14px * var(--font-scale));
+      color: #475569;
+      margin-top: -6px;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+
+    /* 表格樣式 */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: calc(var(--table-font-size) * var(--font-scale));
+      line-height: 1.65;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 12px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background-color: #0f172a;
+      color: #f8fafc;
+      font-weight: 700;
+      font-size: calc(var(--table-font-size) * var(--font-scale));
+      letter-spacing: 0.01em;
+    }
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+    tr:hover {
+      background-color: #f1f5f9;
+    }
+
+    /* 音標與代碼專用字型 */
+    .ipa-text {
+      font-family: "Charis SIL", "Doulos SIL", "Lucida Sans Unicode", "DejaVu Sans", "Arial Unicode MS", monospace;
+      font-weight: 700;
+      color: #047857;
+      letter-spacing: 0.02em;
+      font-size: calc(var(--ipa-font-size) * var(--font-scale));
+      white-space: nowrap;
+    }
+    .code-tag {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-weight: 700;
+      color: #1d4ed8;
+      background-color: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: calc(var(--code-font-size) * var(--font-scale));
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: calc(12px * var(--font-scale));
+      font-weight: 700;
+    }
+
+    /* 例外字庫專用排版 */
+    .exception-words-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 8px;
+    }
+    .exception-word-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 12.5px;
+    }
+    .exception-word-item:hover {
+      border-color: #94a3b8;
+      background-color: #f8fafc;
+    }
+    .word-en {
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .word-ipa {
+      font-family: "Charis SIL", "Doulos SIL", "Lucida Sans Unicode", "DejaVu Sans", "Arial Unicode MS", monospace;
+      font-weight: 600;
+      color: #047857;
+      font-size: 12px;
+    }
+    .word-zh {
+      color: #64748b;
+      font-size: 11px;
+    }
+
+    /* 字母過濾工具列 */
+    .alphabet-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 14px;
+      padding: 10px;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      align-items: center;
+    }
+    .filter-letter-btn {
+      background: white;
+      border: 1px solid #cbd5e1;
+      padding: 4px 9px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+    .filter-letter-btn:hover, .filter-letter-btn.active {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    /* 列印樣式 */
+    @media print {
+      body { padding: 0; background: white; }
+      .top-navbar, .quick-jump-bar, .search-box-wrapper, .alphabet-filter-bar { display: none !important; }
+      .section-card { border: none; box-shadow: none; padding: 0; margin-bottom: 20px; page-break-inside: avoid; }
+      th { background-color: #1e293b !important; color: white !important; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+<script src="./EPRS 英文發音知識系統 - 音節切分與音標推導全套工具表_files/_aistudio-iframe.js.下載"></script></head>
+<body>
+
+  <!-- 頂部全域工具列 -->
+  <div class="top-navbar">
+    <div>
+      <h1 class="brand-title">EPRS 英文發音知識系統</h1>
+      <p class="brand-subtitle">教育部常用 1200 字庫全套音節切分、規則推理與音標推導工具表</p>
+    </div>
+    <div class="nav-actions">
+      <!-- 網頁文字大小快速調節 -->
+      <div class="font-scale-control" title="調整網頁所有文字、表格與音標大小">
+        <span class="font-scale-label">🔤 字級：</span>
+        <div class="font-scale-btn-group">
+          <button type="button" class="font-btn" onclick="setFontScale(1.0)" id="scaleBtn_100" title="標準 (100%)">標準</button>
+          <button type="button" class="font-btn" onclick="setFontScale(1.15)" id="scaleBtn_115" title="適度放大 (115%)">放大 A+</button>
+          <button type="button" class="font-btn active" onclick="setFontScale(1.30)" id="scaleBtn_130" title="清晰特大 (130%)">特大 A++</button>
+          <button type="button" class="font-btn" onclick="setFontScale(1.45)" id="scaleBtn_145" title="最大字級 (145%)">超大</button>
+          <button type="button" class="font-btn" onclick="setFontScale(2.0)" id="scaleBtn_200" title="最大字級 (200%)">2倍大</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 快速跳轉導覽列 -->
+  <div class="quick-jump-bar">
+    <span class="quick-jump-label">快速跳轉索引：</span>
+    <a href="https://ais-dev-zguemtpt3b22rch2rtgroa-561243370080.asia-east1.run.app/EPRS_Syllable_IPA_Tool_Matrix.html#section-syllable" class="jump-tag">工具表一：音節切分四部曲</a>
+    <a href="https://ais-dev-zguemtpt3b22rch2rtgroa-561243370080.asia-east1.run.app/EPRS_Syllable_IPA_Tool_Matrix.html#section-rules" class="jump-tag">工具表二：17 條發音規則對照表</a>
+    <a href="https://ais-dev-zguemtpt3b22rch2rtgroa-561243370080.asia-east1.run.app/EPRS_Syllable_IPA_Tool_Matrix.html#section-vowels" class="jump-tag">工具表三 (上)：美式母音速查矩陣</a>
+    <a href="https://ais-dev-zguemtpt3b22rch2rtgroa-561243370080.asia-east1.run.app/EPRS_Syllable_IPA_Tool_Matrix.html#section-consonants" class="jump-tag">工具表三 (下)：美式子音速查矩陣</a>
+    <a href="https://ais-dev-zguemtpt3b22rch2rtgroa-561243370080.asia-east1.run.app/EPRS_Syllable_IPA_Tool_Matrix.html#section-exceptions" class="jump-tag">工具表四：1200 字庫例外單字速查表</a>
+  </div>
+
+  <!-- 即時關鍵字搜尋過濾列 -->
+  <div class="search-box-wrapper">
+    <span style="font-weight: 700; color: #475569; font-size: 13px;">即時過濾檢索：</span>
+    <input type="text" id="globalSearchInput" class="search-input" placeholder="輸入任何單字、中文、IPA 音標、規則代碼 (如 R001, 魔術 e, VCV)..." oninput="performGlobalSearch(this.value)">
+    <span id="searchResultCount" class="search-counter">全字庫就緒</span>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 工具表一：音節切分四部曲 (Syllable Matrix) -->
+  <!-- ========================================== -->
+  <div class="section-card" id="section-syllable">
+    <div class="section-title">
+      <span>工具表一：EPRS 自然發音音節切分四部曲 (Syllable Segmentation 4 Steps)</span>
+      <span class="code-tag">步驟 1 至 4 完整邏輯</span>
+    </div>
+    <p class="section-desc">
+      任何未知單字均遵循「母音核心定位 → 複合子音鎖定 → 結構切分劃分 → 型態規則推導」四部曲，100% 可推導出精確音節邊界與發音型態。
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 140px;">步驟階段</th>
+          <th style="width: 170px;">核心法則</th>
+          <th>詳細操作說明與判定邏輯</th>
+          <th style="width: 260px;">經典範例單字 (MOE 1200)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="searchable-row">
+          <td><b style="color: #1d4ed8;">步驟 1：母音核心</b></td>
+          <td><b>找出發音母音核心</b></td>
+          <td>每個音節必定包含且僅包含一個發音母音核心 (a, e, i, o, u, y / ai, ee, oa / ar, er...)。字尾不發音 e 不計為獨立核心。</td>
+          <td><span class="code-tag">cat</span> [a], <span class="code-tag">train</span> [ai], <span class="code-tag">agree</span> [a]+[ee] (2音節)</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #15803d;">步驟 2：鎖定子音</b></td>
+          <td><b>標記不可拆子音組合</b></td>
+          <td>
+            1. <b>不可拆複合子音</b> (sh, ch, th, ph, wh, ck, 字尾 ng [發單音 /ŋ/]) 與<b>子音叢</b> (gr, bl, cl, dr, st, pr, tr) 視為單一發音單位，切分音節時絕不可拆斷。<br>
+            <span style="color: #92400e; font-size: 11px; font-weight: 600;">
+              ★ 核心辨析：字尾單一複合子音 ng (如 <i>sing, ring, song</i>) 不可拆；但字根內部相連雙子音 n + g (如 <i>kan·ga·roo, fin·ger, lan·guage, hun·gry</i>) 則遵循 VCCV 在 n 與 g 中間切分，前節 n 產生軟顎鼻音同化發 /ŋ/，後節 g 發 /ɡ/，拼合為 /ŋɡ/。
+            </span>
+          </td>
+          <td>
+            <span class="code-tag">tea · cher</span> (ch 不拆)<br>
+            <span class="code-tag">sing · er</span> (字尾ng不拆 /ŋ/)<br>
+            <span class="code-tag">kan · ga · roo</span> (VCCV n+g拆分 /ŋɡ/)
+          </td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #c2410c;">步驟 3：結構切分</b></td>
+          <td><b>VCV 劃後 / 閉音留前 / VCCV 拆開</b></td>
+          <td>
+            1. <b>VCV 結構（雙分流原則）</b>：<br>
+            &nbsp;&nbsp;• <b>(A) 開音節長音預設</b>：單子音劃歸後音節（V · CV，如 <i>o-pen, ti-ger, ba-by</i>）<br>
+            &nbsp;&nbsp;• <b>(B) 重讀短音閉音節修正</b>：首節為短母音時，子音留前封閉（VC · V，如 <i>hon-ey, sev-en, drag-on, rob-in</i>）<br>
+            2. <b>VCCV 結構</b>：相連雙子音從中間拆開（如 <i>bas-ket, doc-tor, hap-py</i>）<br>
+            3. <b>-Cle 結構</b>：字尾「子音 + le」獨立為成音節（如 <i>ap-ple, lit-tle, bot-tle</i>）<br>
+            4. <b>複合詞結構</b>：兩實詞字根在邊界處直接切分（如 <i>head-ache, bed-room</i>）
+          </td>
+          <td>
+            <span class="code-tag">o · pen</span> (長音劃後)<br>
+            <span class="code-tag">hon · ey</span> (短音留前)<br>
+            <span class="code-tag">doc · tor</span> (VCCV)<br>
+            <span class="code-tag">head · ache</span> (複合詞)
+          </td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #7e22ce;">步驟 4：型態判定</b></td>
+          <td><b>音節型態與規則推導</b></td>
+          <td>完成邊界劃分後，逐一判定各音節屬於閉音節 (R001)、開音節 (R002)、魔術 e (R003)、母音組合 (R004)、R控制 (R005) 或弱化音節 (R008/R012)。</td>
+          <td><span class="code-tag">eleven</span> [e · lev · en] (3音節弱化開音節+閉音節)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 工具表二：17 條發音規則對照表 (Rules Matrix) -->
+  <!-- ========================================== -->
+  <div class="section-card" id="section-rules">
+    <div class="section-title">
+      <span>工具表二：EPRS 17 條發音規則與自然發音型態對照表 (R001 ~ R017)</span>
+      <span class="code-tag">100% 離線純規則庫</span>
+    </div>
+    <p class="section-desc">
+      系統核心規則庫涵蓋教育部 1200 常用字庫 95% 以上發音規律，支援直接逆向推論與音標生成。
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 80px;">規則代碼</th>
+          <th style="width: 150px;">規則名稱</th>
+          <th>發音推理機制與規律說明</th>
+          <th style="width: 170px;">典型美式 IPA</th>
+          <th style="width: 240px;">範例單字 (MOE 1200)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R001</span></td>
+          <td><b>閉音節短母音</b></td>
+          <td>母音字母被一個或多個子音封閉時，母音發短母音。</td>
+          <td class="ipa-text">/æ, ɛ, ɪ, ɑː, ʌ/</td>
+          <td>cat /kæt/, bed /bɛd/, sit /sɪt/, bus /bʌs/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R002</span></td>
+          <td><b>開音節長母音</b></td>
+          <td>音節以母音字母結尾且無子音封閉時，母音發字母本身長音。</td>
+          <td class="ipa-text">/eɪ, iː, aɪ, oʊ, juː/</td>
+          <td>he /hiː/, go /ɡoʊ/, hi /haɪ/, no /noʊ/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R003</span></td>
+          <td><b>魔術 e 長音</b></td>
+          <td>1. 字尾不發音 e 使前方母音跳發長音 (V-C-e)<br>2. 舌尖/流音 (l, r, d, t, s, z) 後 u_e 美式簡化發 /uː/<br>3. 其餘子音後保留 /juː/。</td>
+          <td class="ipa-text">/eɪ, iː, aɪ, oʊ, juː, uː/</td>
+          <td>cake, time, home<br>rule, flute, glue<br>cute, tube</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R004</span></td>
+          <td><b>母音組合</b></td>
+          <td>固定母音字母群發長音或雙母音 (ai, ay, ee, ea, oa, oi, oy, ou, ow, oo, ue, ew)。</td>
+          <td class="ipa-text">/iː, eɪ, aɪ, aʊ, ɔɪ, ɔː, uː/</td>
+          <td>rain /reɪn/, see /siː/, boat /boʊt/, coin /kɔɪn/, blue /bluː/, new /nuː/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R005</span></td>
+          <td><b>R 控制母音</b></td>
+          <td>母音字母接 r 形成捲舌音 (ar, or, er, ir, ur, ear, eer, air, are)。</td>
+          <td class="ipa-text">/ɑːr, ɔːr, ɝː, ɚ, ɪr, ɛr/</td>
+          <td>car /kɑːr/, fork /fɔːrk/, bird /bɝːd/, hear /hɪr/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R006</span></td>
+          <td><b>複合子音</b></td>
+          <td>1. 雙子音組合發單一音 (sh, th, ph, wh, ck, ng, nk)<br>2. ch 常用發 /tʃ/，希臘外來字發 /k/。</td>
+          <td class="ipa-text">/ʃ, tʃ, θ, ð, f, ŋ, k/</td>
+          <td>ship, think, photo, ring, bank<br>chair, watch vs ache, school</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R007</span></td>
+          <td><b>軟硬子音</b></td>
+          <td>1. 字母 c, g 接 e, i, y 時發軟音 (c 發 /s/, g 發 /dʒ/)<br>2. 其餘接 a, o, u 發硬音 (/k/, /ɡ/)<br>3. gu- 中的 u 靜音用於保護 g 維持硬音 /ɡ/。</td>
+          <td class="ipa-text">/s/, /dʒ/ vs /k/, /ɡ/</td>
+          <td>city, giant<br>cat, go, gun<br>guess, guide, guitar</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R008</span></td>
+          <td><b>母音弱化</b></td>
+          <td>多音節單字中非重音音節之母音弱化發中央輕母音 /ə/ 或 /ɪ/。</td>
+          <td class="ipa-text">/ə/, /ɪ/</td>
+          <td>banana /bəˈnæn.ə/, open /ˈoʊ.pən/, pencil /ˈpɛn.səl/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R009</span></td>
+          <td><b>成音節字尾</b></td>
+          <td>字尾 -ble, -tle, -dle, -ple, -gle 等子音+le 直接形成音節。</td>
+          <td class="ipa-text">/l/ 成音節</td>
+          <td>apple /ˈæp.l̩/, little /ˈlɪt.l̩/, bottle /ˈbɑː.t̬l̩/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R010</span></td>
+          <td><b>特殊發音例外</b></td>
+          <td>受古英語歷史留存或約定俗成影響之特殊單字，獨立歸納記憶。</td>
+          <td class="ipa-text">特例音標</td>
+          <td>son /sʌn/, friend /frɛnd/, one /wʌn/, eye /aɪ/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R011</span></td>
+          <td><b>特殊母音字族</b></td>
+          <td>特定拼寫組合 -all, -old, -ind, -ild, -ight 發特定長母音。</td>
+          <td class="ipa-text">/ɔːl, oʊld, aɪnd, aɪt/</td>
+          <td>fall /fɔːl/, cold /koʊld/, find /faɪnd/, light /laɪt/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R012</span></td>
+          <td><b>前綴弱化</b></td>
+          <td>非重讀前綴 a-, be-, de-, re-, ex-, con-, in- 母音弱化發 /ə/ 或 /ɪ/。</td>
+          <td class="ipa-text">/ə-, bɪ-, dɪ-, rɪ-/</td>
+          <td>agree /əˈɡriː/, begin /bɪˈɡɪn/, report /rɪˈpɔːrt/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R013</span></td>
+          <td><b>詞性重音轉移</b></td>
+          <td>雙音節同形異義詞：名詞重音在第 1 音節，動詞重音在第 2 音節。</td>
+          <td class="ipa-text">重音位置切換</td>
+          <td>record (名詞 /ˈrɛk.ɚd/ 對應 動詞 /rɪˈkɔːrd/)</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R014</span></td>
+          <td><b>美式音變 (Y脫落/閃音/弱化脫落 Syncope/鼻腔爆破)</b></td>
+          <td>
+            1. <b>Y 脫落 (Yod-dropping)</b>：舌尖/流音後 u/ue/ew 省略 /j/ 直接發長音 /uː/<br>
+            2. <b>閃音 (Flap T)</b>：母音間非重音 t/d 轉為輕彈音 /t̬/<br>
+            3. <b>中音脫落 / 弱化脫落 (Syncope)</b>：非重讀音節母音弱化脫落，促使子音連讀 (如 <i>interest /ˈɪn.trɪst/, interesting, every, camera, family</i>)<br>
+            4. <b>t 脫落與同化</b>：非重讀音節中 /n/ 後的 /t/ 常脫落或同化 (如 <i>internet, interview, twenty</i>)<br>
+            5. <b>美式 -ary / -ery 次重音保留</b>：美式英語字尾保留次重音發 /ɛr.i/ (如 <i>January, library, dictionary</i>)
+          </td>
+          <td class="ipa-text">/uː/ (Y脫落)<br>/t̬/ (閃音)<br>/tr/ (弱化脫落)</td>
+          <td>
+            tune /tuːn/, duty /ˈduː.t̬i/, blue /bluː/<br>
+            water /ˈwɑː.t̬ɚ/, city /ˈsɪt.i/<br>
+            interest /ˈɪn.trɪst/<br>
+            interview /ˈɪn.t̬ɚ.vjuː/<br>
+            library /ˈlaɪ.brɛr.i/
+          </td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R015</span></td>
+          <td><b>複合名詞重音</b></td>
+          <td>複合字 (Compound Words) 主重音落在第 1 部分，各部分各自保留母音。</td>
+          <td class="ipa-text">首節主重音</td>
+          <td>bedroom /ˈbɛd.ruːm/, classroom /ˈklæs.ruːm/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R016</span></td>
+          <td><b>靜音子音</b></td>
+          <td>1. 首部靜音：kn- (k靜音), wr- (w靜音), gh- (h靜音)<br>2. 尾部靜音：-mb (b靜音)<br>3. 中間靜音：-alk/-alf/-alm (l靜音), -sten/-stle (t靜音)<br>4. 保護靜音：gu- (u靜音保護g)。</td>
+          <td class="ipa-text">不發音</td>
+          <td>know, knee, write, wrong, ghost<br>lamb, climb, bomb<br>half, talk, walk, listen, castle<br>guess, guide, guest</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><span class="code-tag">R017</span></td>
+          <td><b>歷史與外來語</b></td>
+          <td>源自法語或其他語系留存之特殊拼音對映。</td>
+          <td class="ipa-text">特例外來音</td>
+          <td>police /pəˈliːs/, machine /məˈʃiːn/, chef /ʃɛf/</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 工具表三：美式 IPA 發音速查矩陣 (IPA Matrix) -->
+  <!-- ========================================== -->
+  <div class="section-card" id="section-vowels">
+    <div class="section-title">
+      <span>工具表三 (上)：美式母音分類速查矩陣 (Vowels Matrix)</span>
+      <span class="code-tag">短母音 · 長母音 · 雙母音 · R控制母音</span>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 160px;">母音分類</th>
+          <th style="width: 100px;">美式 IPA</th>
+          <th style="width: 220px;">常見自然發音字母組合</th>
+          <th>經典範例單字 (MOE 1200)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="searchable-row">
+          <td><b style="color: #b45309;">短母音 (Short Vowels)</b></td>
+          <td class="ipa-text">/æ/</td>
+          <td>字母 a (閉音節)</td>
+          <td>cat, bag, apple, fat, hat, stand, back, happy</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #b45309;">短母音 (Short Vowels)</b></td>
+          <td class="ipa-text">/ɛ/</td>
+          <td>字母 e (閉音節), ea (特例)</td>
+          <td>bed, red, desk, bread, head, heavy, let, pen</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #b45309;">短母音 (Short Vowels)</b></td>
+          <td class="ipa-text">/ɪ/</td>
+          <td>字母 i (閉音節), y (字中)</td>
+          <td>pig, sit, milk, gym, myth, dish, kick, list</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #b45309;">短母音 (Short Vowels)</b></td>
+          <td class="ipa-text">/ɑː/</td>
+          <td>字母 o (閉音節), a (在 w 之後)</td>
+          <td>dog, box, hot, wash, watch, want, stop, not</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #b45309;">短母音 (Short Vowels)</b></td>
+          <td class="ipa-text">/ʌ/</td>
+          <td>字母 u (閉音節), o (特例 -th,-v)</td>
+          <td>bus, cup, duck, son, love, money, mother, run</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #b45309;">短母音 (Short Vowels)</b></td>
+          <td class="ipa-text">/ʊ/</td>
+          <td>組合 oo (短音字族), u (特定子音前)</td>
+          <td>book, foot, good, cook, look, pull, full, put</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #1d4ed8;">長母音 (Long Vowels)</b></td>
+          <td class="ipa-text">/eɪ/</td>
+          <td>a_e, ai, ay, ea (特例)</td>
+          <td>cake, rain, day, break, great, play, table, face</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #1d4ed8;">長母音 (Long Vowels)</b></td>
+          <td class="ipa-text">/iː/</td>
+          <td>字母 e, e_e, ee, ea, ie, y (字尾)</td>
+          <td>he, bee, eat, piece, key, tree, sleep, street</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #1d4ed8;">長母音 (Long Vowels)</b></td>
+          <td class="ipa-text">/aɪ/</td>
+          <td>i_e, igh, -ind, -ild, y (單音節結尾)</td>
+          <td>bike, night, find, fly, cry, pie, light, white</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #1d4ed8;">長母音 (Long Vowels)</b></td>
+          <td class="ipa-text">/oʊ/</td>
+          <td>o_e, oa, ow, -old, -ost</td>
+          <td>home, boat, snow, cold, most, open, nose, road</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #1d4ed8;">長母音 (Long Vowels)</b></td>
+          <td class="ipa-text">/juː/</td>
+          <td>u, u_e, ue, ew (在唇音/喉音後: c, b, m, f, h)</td>
+          <td>cute, music, beauty, few, huge, use, tube</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #1d4ed8;">長母音 (美式 Y 脫落)</b></td>
+          <td class="ipa-text">/uː/</td>
+          <td>u_e, ue, ew, oo, ui (在舌尖/流音後: l, r, d, t, s, z, n)</td>
+          <td>blue, glue, rule, flute, tune, duty, suit, student, food, moon, fruit</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #047857;">雙母音與特殊音</b></td>
+          <td class="ipa-text">/aʊ/</td>
+          <td>組合 ou, ow</td>
+          <td>house, mouse, cow, now, town, cloud, sound</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #047857;">雙母音與特殊音</b></td>
+          <td class="ipa-text">/ɔɪ/</td>
+          <td>組合 oi, oy</td>
+          <td>oil, coin, boy, toy, join, voice, enjoy</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #047857;">雙母音與特殊音</b></td>
+          <td class="ipa-text">/ɔː/</td>
+          <td>組合 al, au, aw, a (在 l 前)</td>
+          <td>all, ball, call, autumn, saw, draw, water</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #7c2d12;">R 控制母音 (捲舌)</b></td>
+          <td class="ipa-text">/ɝː/ 及 /ɚ/</td>
+          <td>組合 er, ir, ur, ear (重音/輕音)</td>
+          <td>bird, girl, nurse, teacher, sister, water, early</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #7c2d12;">R 控制母音 (捲舌)</b></td>
+          <td class="ipa-text">/ɑːr/</td>
+          <td>組合 ar</td>
+          <td>car, star, park, dark, yard, farm, market</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #7c2d12;">R 控制母音 (捲舌)</b></td>
+          <td class="ipa-text">/ɔːr/</td>
+          <td>組合 or, oar, oor, our</td>
+          <td>fork, door, floor, four, morning, short, board</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #7c2d12;">R 控制母音 (捲舌)</b></td>
+          <td class="ipa-text">/ɪr/</td>
+          <td>組合 eer, ear, ere</td>
+          <td>deer, ear, hear, clear, here, engineer, near</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #7c2d12;">R 控制母音 (捲舌)</b></td>
+          <td class="ipa-text">/ɛr/</td>
+          <td>組合 air, are, ear (特例)</td>
+          <td>chair, hair, care, bear, wear, pear, airport</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b style="color: #475569;">弱化輕母音</b></td>
+          <td class="ipa-text">/ə/ 及 /ɪ/</td>
+          <td>非重讀音節之任意母音字母</td>
+          <td>banana, about, open, pencil, lemon, family</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 14px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 16px;">
+      <div style="font-weight: bold; color: #78350f; font-size: 13px; margin-bottom: 6px;">
+        💡 美式自然發音核心音變：長母音 /juː/ 與 /uː/ 條件分流法則 (Yod-Dropping)
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 12px; color: #334155;">
+        <div style="background: white; border: 1px solid #fef3c7; border-radius: 6px; padding: 10px;">
+          <b style="color: #047857;">1. 簡化為長母音 /uː/ (Y 脫落)</b><br>
+          在<b>舌尖音、齒齦音、流音 (/l, r, d, t, s, z, n, θ/)</b> 之後，滑音 /j/ 自然省略脫落。<br>
+          <span style="font-family: monospace; font-weight: bold; color: #059669; font-size: 11px;">
+            例：blue /bluː/, glue /ɡluː/, rule /ruːl/, flute /fluːt/, tune /tuːn/, duty /ˈduː.t̬i/, suit /suːt/, student /ˈstuː.dənt/
+          </span>
+        </div>
+        <div style="background: white; border: 1px solid #fef3c7; border-radius: 6px; padding: 10px;">
+          <b style="color: #1d4ed8;">2. 保留長母音 /juː/</b><br>
+          在<b>唇音、喉音、軟顎音 (/k, b, m, f, h, p/)</b> 之後，保留標準 /j/ 滑音。<br>
+          <span style="font-family: monospace; font-weight: bold; color: #2563eb; font-size: 11px;">
+            例：cute /kjuːt/, music /ˈmjuː.zɪk/, beauty /ˈbjuː.t̬i/, few /fjuː/, huge /hjuːdʒ/, use /juːz/
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 工具表三 (下)：子音速查矩陣 -->
+  <div class="section-card" id="section-consonants">
+    <div class="section-title">
+      <span>工具表三 (下)：美式子音發音速查矩陣 (Consonants Matrix)</span>
+      <span class="code-tag">無聲/有聲配對 · 鼻音 · 流音 · 美式音變</span>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 170px;">子音組別</th>
+          <th style="width: 160px;">無聲 / 有聲 IPA</th>
+          <th style="width: 200px;">對應字母拼寫</th>
+          <th>經典範例單字 (MOE 1200)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="searchable-row">
+          <td><b>雙唇塞音 (雙唇爆破)</b></td>
+          <td class="ipa-text">無聲 /p/ · 有聲 /b/</td>
+          <td>p, pp · b, bb</td>
+          <td>pen, pig, stop · bag, bed, rabbit</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>齒齦塞音 (舌尖爆破)</b></td>
+          <td class="ipa-text">無聲 /t/ · 有聲 /d/</td>
+          <td>t, tt · d, dd</td>
+          <td>ten, top, cat · dog, duck, red</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>軟顎塞音 (舌根爆破)</b></td>
+          <td class="ipa-text">無聲 /k/ · 有聲 /ɡ/</td>
+          <td>k, c, ck · g, gg</td>
+          <td>kid, cat, duck · go, girl, big, egg</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>唇齒擦音 (咬下唇)</b></td>
+          <td class="ipa-text">無聲 /f/ · 有聲 /v/</td>
+          <td>f, ff, ph · v, ve</td>
+          <td>fan, fish, photo · van, vest, have, five</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>齒間擦音 (咬舌尖)</b></td>
+          <td class="ipa-text">無聲 /θ/ · 有聲 /ð/</td>
+          <td>th (無聲) · th (有聲)</td>
+          <td>thank, think, three · this, that, mother, brother</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>齒齦擦音 (齒間摩擦)</b></td>
+          <td class="ipa-text">無聲 /s/ · 有聲 /z/</td>
+          <td>s, ss, c(接e,i,y) · z, s</td>
+          <td>sun, bus, city · zoo, zero, nose, rose</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>硬顎擦音 (噘嘴摩擦)</b></td>
+          <td class="ipa-text">無聲 /ʃ/ · 有聲 /ʒ/</td>
+          <td>sh, ti, ci, si · s, ge</td>
+          <td>ship, shoe, nation · television, usually, beige</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>破擦音 (爆破接摩擦)</b></td>
+          <td class="ipa-text">無聲 /tʃ/ · 有聲 /dʒ/</td>
+          <td>ch, tch · j, g(接e,i,y), dge</td>
+          <td>chair, watch, rich · jump, giant, gym, bridge</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>雙唇鼻音 (閉唇發音)</b></td>
+          <td class="ipa-text">/m/</td>
+          <td>m, mm, -mb (b靜音)</td>
+          <td>man, milk, summer, climb, lamb, comb</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>齒齦鼻音 (舌尖頂上顎)</b></td>
+          <td class="ipa-text">/n/</td>
+          <td>n, nn, kn- (k靜音)</td>
+          <td>no, name, dinner, know, knee, knife</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>軟顎鼻音 (舌根頂軟顎)</b></td>
+          <td class="ipa-text">/ŋ/</td>
+          <td>ng (字尾/詞幹末)</td>
+          <td>sing, song, ring, king, long, strong</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>軟顎鼻音叢 (複合同化)</b></td>
+          <td class="ipa-text">/ŋk/ 或 /ŋɡ/</td>
+          <td>nk 發 /ŋk/<br>ng 接母音常發 /ŋɡ/</td>
+          <td>bank, thank, pink, think<br>finger, anger, English</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>舌側流音 (邊音/深音)</b></td>
+          <td class="ipa-text">/l/</td>
+          <td>l, ll (含淺音 light l 與深音 dark l)</td>
+          <td>leg, light, ball, bell, milk, cold</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>齒齦捲舌音 (美式捲舌)</b></td>
+          <td class="ipa-text">/r/</td>
+          <td>r, rr, wr- (w靜音)</td>
+          <td>red, run, sorry, write, wrong, wrap</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>美式特色音變 (Flap T)</b></td>
+          <td class="ipa-text">/t/ 閃音 (輕彈音)</td>
+          <td>母音間非重音 t, tt, dd</td>
+          <td>water, better, city, butter, letter, writer, party</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 工具表三 (附)：屈折詞尾變化發音與增音音節速查表 -->
+  <div class="section-card" id="section-inflections">
+    <div class="section-title">
+      <span>工具表三 (附)：屈折詞尾變化發音與增音音節速查表 (-s / -es · -ed · -ing)</span>
+      <span class="code-tag">100% 語音同化與音節增減邏輯</span>
+    </div>
+    <p class="section-desc">
+      屈折變化（名詞複數、動詞三單、過去式、進行式）是自然發音音節計算與音標推導的核心規則。依前接聲音特徵（噝音、清音、濁音、齒齦塞音）嚴格判定音節是否增添與清濁同化：
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 140px;">字尾類型</th>
+          <th style="width: 220px;">前接音標條件</th>
+          <th style="width: 130px;">音節變化</th>
+          <th style="width: 110px;">IPA 發音</th>
+          <th>經典範例單字 (MOE 1200)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="searchable-row">
+          <td rowspan="3"><b>-s / -es</b><br><span style="font-size: 11px; color: #64748b;">(複數 / 第三人稱單數)</span></td>
+          <td><b>噝音結尾</b><br><span style="font-size: 11px; color: #64748b;">/s/, /z/, /ʃ/, /ʒ/, /tʃ/, /dʒ/</span></td>
+          <td><b style="color: #1d4ed8;">+1 獨立音節</b></td>
+          <td class="ipa-text">/-ɪz/</td>
+          <td><b>glasses</b> /ˈɡlæs.ɪz/, <b>watches</b> /ˈwɑː.tʃɪz/, <b>boxes</b> /ˈbɑːk.sɪz/, <b>pages</b> /ˈpeɪ.dʒɪz/, <b>dishes</b> /ˈdɪʃ.ɪz/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>無聲清子音結尾 (非噝音)</b><br><span style="font-size: 11px; color: #64748b;">/p/, /t/, /k/, /f/, /θ/</span></td>
+          <td><span style="color: #64748b;">不增加音節</span></td>
+          <td class="ipa-text">/-s/</td>
+          <td><b>cups</b> /kʌps/, <b>cats</b> /kæts/, <b>books</b> /bʊks/, <b>cliffs</b> /klɪfs/, <b>months</b> /mʌnθs/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>有聲濁子音或母音結尾</b><br><span style="font-size: 11px; color: #64748b;">/b, d, ɡ, v, ð, m, n, ŋ, l, r/ 及母音</span></td>
+          <td><span style="color: #64748b;">不增加音節</span></td>
+          <td class="ipa-text">/-z/</td>
+          <td><b>dogs</b> /dɔːɡz/, <b>beds</b> /bɛdz/, <b>days</b> /deɪz/, <b>trees</b> /triːz/, <b>cars</b> /kɑːrz/, <b>pens</b> /pɛnz/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td rowspan="3"><b>-ed</b><br><span style="font-size: 11px; color: #64748b;">(過去式 / 過去分詞)</span></td>
+          <td><b>/t/ 或 /d/ 齒齦塞音結尾</b></td>
+          <td><b style="color: #1d4ed8;">+1 獨立音節</b></td>
+          <td class="ipa-text">/-ɪd/</td>
+          <td><b>wanted</b> /ˈwɑːn.tɪd/, <b>needed</b> /ˈniː.dɪd/, <b>waited</b> /ˈweɪ.tɪd/, <b>decided</b> /dɪˈsaɪ.dɪd/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>無聲清子音結尾 (非/t/)</b><br><span style="font-size: 11px; color: #64748b;">/p/, /k/, /f/, /s/, /ʃ/, /tʃ/, /θ/</span></td>
+          <td><span style="color: #64748b;">不增加音節</span></td>
+          <td class="ipa-text">/-t/</td>
+          <td><b>stopped</b> /stɑːpt/, <b>cooked</b> /kʊkt/, <b>kissed</b> /kɪst/, <b>washed</b> /wɑːʃt/, <b>watched</b> /wɑːtʃt/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>有聲濁子音或母音結尾 (非/d/)</b><br><span style="font-size: 11px; color: #64748b;">/b, ɡ, v, z, ʒ, dʒ, m, n, ŋ, l, r/ 及母音</span></td>
+          <td><span style="color: #64748b;">不增加音節</span></td>
+          <td class="ipa-text">/-d/</td>
+          <td><b>played</b> /pleɪd/, <b>cleaned</b> /kliːnd/, <b>lived</b> /lɪvd/, <b>opened</b> /ˈoʊ.pənd/, <b>called</b> /kɔːld/</td>
+        </tr>
+        <tr class="searchable-row">
+          <td><b>-ing</b><br><span style="font-size: 11px; color: #64748b;">(進行式 / 動名詞)</span></td>
+          <td><b>任意動詞字尾</b></td>
+          <td><b style="color: #1d4ed8;">+1 獨立音節</b></td>
+          <td class="ipa-text">/-ɪŋ/</td>
+          <td><b>going</b> /ˈɡoʊ.ɪŋ/, <b>doing</b> /ˈduː.ɪŋ/, <b>eating</b> /ˈiː.tɪŋ/, <b>playing</b> /ˈpleɪ.ɪŋ/</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 工具表四：例外單字庫速查表 (Exceptions Matrix) -->
+  <!-- ========================================== -->
+  <div class="section-card" id="section-exceptions">
+    <div class="section-title">
+      <span>工具表四：EPRS 高頻發音與不規則例外單字速查表 (MOE 1200 共 66 字全收錄)</span>
+      <span class="code-tag">依規則類別與 A-Z 嚴謹排序</span>
+    </div>
+    <p class="section-desc">
+      英文發音有少數高頻字受歷史留存或約定俗成影響不遵循標準規則。EPRS 系統將教育部 1200 字庫所有 66 個例外單字歸類收錄，規則內單字一律按 A-Z 排序，並將單字、音標與中文精確對齊：
+    </p>
+
+    <!-- 字母快速篩選列 -->
+    <div class="alphabet-filter-bar">
+      <span style="font-weight: 700; font-size: 12px; color: #475569; margin-right: 4px;">首字母過濾：</span>
+      <button class="filter-letter-btn active" onclick="filterByLetter(&#39;ALL&#39;)" data-letter="ALL">全部 (ALL)</button>
+      
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;A&#39;)" data-letter="A">A</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;B&#39;)" data-letter="B">B</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;C&#39;)" data-letter="C">C</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;D&#39;)" data-letter="D">D</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;E&#39;)" data-letter="E">E</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;F&#39;)" data-letter="F">F</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;G&#39;)" data-letter="G">G</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;H&#39;)" data-letter="H">H</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;I&#39;)" data-letter="I">I</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;K&#39;)" data-letter="K">K</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;L&#39;)" data-letter="L">L</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;M&#39;)" data-letter="M">M</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;O&#39;)" data-letter="O">O</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;P&#39;)" data-letter="P">P</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;R&#39;)" data-letter="R">R</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;S&#39;)" data-letter="S">S</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;T&#39;)" data-letter="T">T</button>
+
+  <button class="filter-letter-btn" onclick="filterByLetter(&#39;W&#39;)" data-letter="W">W</button>
+
+    </div>
+
+    <table id="exceptionsTable">
+      <thead>
+        <tr>
+          <th>例外規則歸類與說明</th>
+          <th>收錄例外單字 (英文 · 美式 IPA · 中文)</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+    <tr class="category-row" data-category="靜音子音 (中間 w 靜音)">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #6b21a8; margin-bottom: 6px; font-size: 14px;">靜音子音 (中間 w 靜音)</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #6b21a8;">單字中間之字母 w 完全不發音（古英語留存發音）</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 2 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="answer" data-letter="A" data-chinese="回答" data-ipa="/ˈæn.sɚ/">
+      <span class="word-en">answer</span>
+      <span class="word-ipa">/ˈæn.sɚ/</span>
+      <span class="word-zh">回答</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="two" data-letter="T" data-chinese="二" data-ipa="/tuː/">
+      <span class="word-en">two</span>
+      <span class="word-ipa">/tuː/</span>
+      <span class="word-zh">二</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="ear 組合發 /er/ 例外">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #c2410c; margin-bottom: 6px; font-size: 14px;">ear 組合發 /er/ 例外</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #c2410c;">ear 通常發 /ɪr/，此處特例發捲舌音 /er/</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 3 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="bear" data-letter="B" data-chinese="熊" data-ipa="/bɛr/">
+      <span class="word-en">bear</span>
+      <span class="word-ipa">/bɛr/</span>
+      <span class="word-zh">熊</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="pear" data-letter="P" data-chinese="梨子" data-ipa="/pɛr/">
+      <span class="word-en">pear</span>
+      <span class="word-ipa">/pɛr/</span>
+      <span class="word-zh">梨子</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="wear" data-letter="W" data-chinese="穿" data-ipa="/wɛr/">
+      <span class="word-en">wear</span>
+      <span class="word-ipa">/wɛr/</span>
+      <span class="word-zh">穿</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="ea 組合發短音 /ɛ/ 例外">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #c2410c; margin-bottom: 6px; font-size: 14px;">ea 組合發短音 /ɛ/ 例外</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #c2410c;">ea 母音組合通常發長音 /iː/，此處特例發短音 /ɛ/</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 8 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="bread" data-letter="B" data-chinese="麵包" data-ipa="/brɛd/">
+      <span class="word-en">bread</span>
+      <span class="word-ipa">/brɛd/</span>
+      <span class="word-zh">麵包</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="dead" data-letter="D" data-chinese="死的" data-ipa="/dɛd/">
+      <span class="word-en">dead</span>
+      <span class="word-ipa">/dɛd/</span>
+      <span class="word-zh">死的</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="head" data-letter="H" data-chinese="頭" data-ipa="/hɛd/">
+      <span class="word-en">head</span>
+      <span class="word-ipa">/hɛd/</span>
+      <span class="word-zh">頭</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="health" data-letter="H" data-chinese="健康" data-ipa="/hɛlθ/">
+      <span class="word-en">health</span>
+      <span class="word-ipa">/hɛlθ/</span>
+      <span class="word-zh">健康</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="heavy" data-letter="H" data-chinese="重的" data-ipa="/ˈhɛv.i/">
+      <span class="word-en">heavy</span>
+      <span class="word-ipa">/ˈhɛv.i/</span>
+      <span class="word-zh">重的</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="ready" data-letter="R" data-chinese="準備好的" data-ipa="/ˈrɛd.i/">
+      <span class="word-en">ready</span>
+      <span class="word-ipa">/ˈrɛd.i/</span>
+      <span class="word-zh">準備好的</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="sweater" data-letter="S" data-chinese="毛衣" data-ipa="/ˈswɛt.ɚ/">
+      <span class="word-en">sweater</span>
+      <span class="word-ipa">/ˈswɛt.ɚ/</span>
+      <span class="word-zh">毛衣</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="weather" data-letter="W" data-chinese="天氣" data-ipa="/ˈwɛð.ɚ/">
+      <span class="word-en">weather</span>
+      <span class="word-ipa">/ˈwɛð.ɚ/</span>
+      <span class="word-zh">天氣</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="ea 組合發長音 /eɪ/ 例外">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #c2410c; margin-bottom: 6px; font-size: 14px;">ea 組合發長音 /eɪ/ 例外</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #c2410c;">ea 母音組合特例發雙母音 /eɪ/</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 2 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="break" data-letter="B" data-chinese="打破" data-ipa="/breɪk/">
+      <span class="word-en">break</span>
+      <span class="word-ipa">/breɪk/</span>
+      <span class="word-zh">打破</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="great" data-letter="G" data-chinese="很棒的" data-ipa="/ɡreɪt/">
+      <span class="word-en">great</span>
+      <span class="word-ipa">/ɡreɪt/</span>
+      <span class="word-zh">很棒的</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="字母 u 特例發 /ɪ/ 音">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #c2410c; margin-bottom: 6px; font-size: 14px;">字母 u 特例發 /ɪ/ 音</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #c2410c;">古英語留存特殊發音，字母 u 發短母音 /ɪ/（busy, business）</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 2 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="business" data-letter="B" data-chinese="生意" data-ipa="/ˈbɪz.nɪs/">
+      <span class="word-en">business</span>
+      <span class="word-ipa">/ˈbɪz.nɪs/</span>
+      <span class="word-zh">生意</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="busy" data-letter="B" data-chinese="忙碌的" data-ipa="/ˈbɪz.i/">
+      <span class="word-en">busy</span>
+      <span class="word-ipa">/ˈbɪz.i/</span>
+      <span class="word-zh">忙碌的</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="靜音子音 (-stle / -sten 中 t 靜音)">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #6b21a8; margin-bottom: 6px; font-size: 14px;">靜音子音 (-stle / -sten 中 t 靜音)</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #6b21a8;">-stle / -sten / -ften 組合中子音 t 完全不發音 (如 castle, listen, often)</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 3 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="castle" data-letter="C" data-chinese="城堡" data-ipa="/ˈkæs.əl/">
+      <span class="word-en">castle</span>
+      <span class="word-ipa">/ˈkæs.əl/</span>
+      <span class="word-zh">城堡</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="listen" data-letter="L" data-chinese="聽" data-ipa="/ˈlɪs.ən/">
+      <span class="word-en">listen</span>
+      <span class="word-ipa">/ˈlɪs.ən/</span>
+      <span class="word-zh">聽</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="often" data-letter="O" data-chinese="時常" data-ipa="/ˈɑː.fən/">
+      <span class="word-en">often</span>
+      <span class="word-ipa">/ˈɑː.fən/</span>
+      <span class="word-zh">時常</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="靜音子音 (-alf / -alk / -oul 中 l 靜音)">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #6b21a8; margin-bottom: 6px; font-size: 14px;">靜音子音 (-alf / -alk / -oul 中 l 靜音)</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #6b21a8;">特定字族中子音 l 不發音 (如 half, chalk, talk, walk, should)</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 5 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="chalk" data-letter="C" data-chinese="粉筆" data-ipa="/tʃɔːk/">
+      <span class="word-en">chalk</span>
+      <span class="word-ipa">/tʃɔːk/</span>
+      <span class="word-zh">粉筆</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="half" data-letter="H" data-chinese="一半" data-ipa="/hæf/">
+      <span class="word-en">half</span>
+      <span class="word-ipa">/hæf/</span>
+      <span class="word-zh">一半</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="should" data-letter="S" data-chinese="應該" data-ipa="/ʃʊd/">
+      <span class="word-en">should</span>
+      <span class="word-ipa">/ʃʊd/</span>
+      <span class="word-zh">應該</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="talk" data-letter="T" data-chinese="說話" data-ipa="/tɔːk/">
+      <span class="word-en">talk</span>
+      <span class="word-ipa">/tɔːk/</span>
+      <span class="word-zh">說話</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="walk" data-letter="W" data-chinese="走路" data-ipa="/wɑːk/">
+      <span class="word-en">walk</span>
+      <span class="word-ipa">/wɑːk/</span>
+      <span class="word-zh">走路</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="靜音子音 (-mb 字尾 b 靜音)">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #6b21a8; margin-bottom: 6px; font-size: 14px;">靜音子音 (-mb 字尾 b 靜音)</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #6b21a8;">-mb 結尾之單字，字尾 b 完全不發音，僅發 /m/</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 2 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="climb" data-letter="C" data-chinese="爬" data-ipa="/klaɪm/">
+      <span class="word-en">climb</span>
+      <span class="word-ipa">/klaɪm/</span>
+      <span class="word-zh">爬</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="comb" data-letter="C" data-chinese="梳子" data-ipa="/koʊm/">
+      <span class="word-en">comb</span>
+      <span class="word-ipa">/koʊm/</span>
+      <span class="word-zh">梳子</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="魔術 e 發 /ʌ/ 例外 (R010)">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #b91c1c; margin-bottom: 6px; font-size: 14px;">魔術 e 發 /ʌ/ 例外 (R010)</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #b91c1c;">字尾有不發音 e，但 o 不發長音 /oʊ/，改發央母音 /ʌ/</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 4 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="come" data-letter="C" data-chinese="來" data-ipa="/kʌm/">
+      <span class="word-en">come</span>
+      <span class="word-ipa">/kʌm/</span>
+      <span class="word-zh">來</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="glove" data-letter="G" data-chinese="手套" data-ipa="/ɡlʌv/">
+      <span class="word-en">glove</span>
+      <span class="word-ipa">/ɡlʌv/</span>
+      <span class="word-zh">手套</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="love" data-letter="L" data-chinese="喜愛" data-ipa="/lʌv/">
+      <span class="word-en">love</span>
+      <span class="word-ipa">/lʌv/</span>
+      <span class="word-zh">喜愛</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="some" data-letter="S" data-chinese="一些" data-ipa="/sʌm/">
+      <span class="word-en">some</span>
+      <span class="word-ipa">/sʌm/</span>
+      <span class="word-zh">一些</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="高頻特殊不規則單字">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #1d4ed8; margin-bottom: 6px; font-size: 14px;">高頻特殊不規則單字</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #1d4ed8;">英文極高頻習慣發音單字，不遵循單一自然發音規則，建議整字直覺記憶</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 6 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="do" data-letter="D" data-chinese="做" data-ipa="/duː/">
+      <span class="word-en">do</span>
+      <span class="word-ipa">/duː/</span>
+      <span class="word-zh">做</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="eye" data-letter="E" data-chinese="眼睛" data-ipa="/aɪ/">
+      <span class="word-en">eye</span>
+      <span class="word-ipa">/aɪ/</span>
+      <span class="word-zh">眼睛</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="father" data-letter="F" data-chinese="父親" data-ipa="/ˈfɑː.ðɚ/">
+      <span class="word-en">father</span>
+      <span class="word-ipa">/ˈfɑː.ðɚ/</span>
+      <span class="word-zh">父親</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="of" data-letter="O" data-chinese="...的" data-ipa="/ʌv/">
+      <span class="word-en">of</span>
+      <span class="word-ipa">/ʌv/</span>
+      <span class="word-zh">...的</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="one" data-letter="O" data-chinese="一" data-ipa="/wʌn/">
+      <span class="word-en">one</span>
+      <span class="word-ipa">/wʌn/</span>
+      <span class="word-zh">一</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="woman" data-letter="W" data-chinese="女人" data-ipa="/ˈwʊm.ən/">
+      <span class="word-en">woman</span>
+      <span class="word-ipa">/ˈwʊm.ən/</span>
+      <span class="word-zh">女人</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="不規則母音/拼字組合">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #c2410c; margin-bottom: 6px; font-size: 14px;">不規則母音/拼字組合</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #c2410c;">雙母音或拼字組合不遵循常規自然發音對應規則</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 3 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="enough" data-letter="E" data-chinese="足夠的" data-ipa="/ɪˈnʌf/">
+      <span class="word-en">enough</span>
+      <span class="word-ipa">/ɪˈnʌf/</span>
+      <span class="word-zh">足夠的</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="key" data-letter="K" data-chinese="鑰匙" data-ipa="/kiː/">
+      <span class="word-en">key</span>
+      <span class="word-ipa">/kiː/</span>
+      <span class="word-zh">鑰匙</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="laugh" data-letter="L" data-chinese="笑" data-ipa="/læf/">
+      <span class="word-en">laugh</span>
+      <span class="word-ipa">/læf/</span>
+      <span class="word-zh">笑</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="靜音子音 (gh- 中 h 靜音)">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #6b21a8; margin-bottom: 6px; font-size: 14px;">靜音子音 (gh- 中 h 靜音)</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #6b21a8;">gh- 拼寫組合中 h 不發音，僅發硬音 /ɡ/</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 1 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="ghost" data-letter="G" data-chinese="鬼" data-ipa="/ɡoʊst/">
+      <span class="word-en">ghost</span>
+      <span class="word-ipa">/ɡoʊst/</span>
+      <span class="word-zh">鬼</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="魔術 e 發短音例外 (R010)">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #b91c1c; margin-bottom: 6px; font-size: 14px;">魔術 e 發短音例外 (R010)</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #b91c1c;">字尾雖有不發音 e，但主要母音發短音（歷史留存字）</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 3 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="give" data-letter="G" data-chinese="給予" data-ipa="/ɡɪv/">
+      <span class="word-en">give</span>
+      <span class="word-ipa">/ɡɪv/</span>
+      <span class="word-zh">給予</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="have" data-letter="H" data-chinese="有" data-ipa="/hæv/">
+      <span class="word-en">have</span>
+      <span class="word-ipa">/hæv/</span>
+      <span class="word-zh">有</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="live" data-letter="L" data-chinese="住,活的,實況" data-ipa="/lɪv/">
+      <span class="word-en">live</span>
+      <span class="word-ipa">/lɪv/</span>
+      <span class="word-zh">住,活的,實況</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="靜音子音 (字首 h 靜音)">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #6b21a8; margin-bottom: 6px; font-size: 14px;">靜音子音 (字首 h 靜音)</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #6b21a8;">法語歷史外來語，字首 h 完全不發音，首音為母音</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 2 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="honest" data-letter="H" data-chinese="誠實的" data-ipa="/ˈɑː.nɪst/">
+      <span class="word-en">honest</span>
+      <span class="word-ipa">/ˈɑː.nɪst/</span>
+      <span class="word-zh">誠實的</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="hour" data-letter="H" data-chinese="小時" data-ipa="/ˈaʊ.ɚ/">
+      <span class="word-en">hour</span>
+      <span class="word-ipa">/ˈaʊ.ɚ/</span>
+      <span class="word-zh">小時</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="靜音子音 (中間 s 靜音)">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #6b21a8; margin-bottom: 6px; font-size: 14px;">靜音子音 (中間 s 靜音)</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #6b21a8;">受歷史字源拼寫影響，字母 s 完全不發音 (如 island)</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 1 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="island" data-letter="I" data-chinese="島嶼" data-ipa="/ˈaɪ.lənd/">
+      <span class="word-en">island</span>
+      <span class="word-ipa">/ˈaɪ.lənd/</span>
+      <span class="word-zh">島嶼</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="靜音子音 (kn- 字首 k 靜音)">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #6b21a8; margin-bottom: 6px; font-size: 14px;">靜音子音 (kn- 字首 k 靜音)</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #6b21a8;">kn- 開頭單字，字首 k 不發音，僅發 /n/ 音</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 4 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="knee" data-letter="K" data-chinese="膝蓋" data-ipa="/niː/">
+      <span class="word-en">knee</span>
+      <span class="word-ipa">/niː/</span>
+      <span class="word-zh">膝蓋</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="knife" data-letter="K" data-chinese="刀子" data-ipa="/naɪf/">
+      <span class="word-en">knife</span>
+      <span class="word-ipa">/naɪf/</span>
+      <span class="word-zh">刀子</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="knock" data-letter="K" data-chinese="敲" data-ipa="/nɑːk/">
+      <span class="word-en">knock</span>
+      <span class="word-ipa">/nɑːk/</span>
+      <span class="word-zh">敲</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="know" data-letter="K" data-chinese="知道" data-ipa="/noʊ/">
+      <span class="word-en">know</span>
+      <span class="word-ipa">/noʊ/</span>
+      <span class="word-zh">知道</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="靜音子音 (kn-) &amp; 特殊短母音 (ow)">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #b91c1c; margin-bottom: 6px; font-size: 14px;">靜音子音 (kn-) &amp; 特殊短母音 (ow)</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #b91c1c;">kn- 首字母 k 靜音發 /n/，且 ow 不發 /oʊ/ 而是發短母音 /ˈnɑː/</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 1 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="knowledge" data-letter="K" data-chinese="知識" data-ipa="/ˈnɑː.lɪdʒ/">
+      <span class="word-en">knowledge</span>
+      <span class="word-ipa">/ˈnɑː.lɪdʒ/</span>
+      <span class="word-zh">知識</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="魔術 e 發 /uː/ 例外 (R010)">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #b91c1c; margin-bottom: 6px; font-size: 14px;">魔術 e 發 /uː/ 例外 (R010)</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #b91c1c;">字尾有不發音 e，主要母音發 /uː/ 音</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 2 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="lose" data-letter="L" data-chinese="遺失" data-ipa="/luːz/">
+      <span class="word-en">lose</span>
+      <span class="word-ipa">/luːz/</span>
+      <span class="word-zh">遺失</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="move" data-letter="M" data-chinese="移動" data-ipa="/muːv/">
+      <span class="word-en">move</span>
+      <span class="word-ipa">/muːv/</span>
+      <span class="word-zh">移動</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="-ere 組合發 /ɛr/ 例外">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #c2410c; margin-bottom: 6px; font-size: 14px;">-ere 組合發 /ɛr/ 例外</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #c2410c;">-ere 組合通常發 /ɪr/ (如 here)，此處特例發捲舌音 /ɛr/</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 2 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="there" data-letter="T" data-chinese="那裡" data-ipa="/ðɛr/">
+      <span class="word-en">there</span>
+      <span class="word-ipa">/ðɛr/</span>
+      <span class="word-zh">那裡</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="where" data-letter="W" data-chinese="何處" data-ipa="/wɛr/">
+      <span class="word-en">where</span>
+      <span class="word-ipa">/wɛr/</span>
+      <span class="word-zh">何處</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="母音 a 在 w/wh 後發 /ɑː/ 例外">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #c2410c; margin-bottom: 6px; font-size: 14px;">母音 a 在 w/wh 後發 /ɑː/ 例外</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #c2410c;">字母 a 在圓唇子音 w / wh 之後受圓唇音化影響，特例發短母音 /ɑː/</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 5 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="want" data-letter="W" data-chinese="想要" data-ipa="/wɑːnt/">
+      <span class="word-en">want</span>
+      <span class="word-ipa">/wɑːnt/</span>
+      <span class="word-zh">想要</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="wash" data-letter="W" data-chinese="清洗" data-ipa="/wɑːʃ/">
+      <span class="word-en">wash</span>
+      <span class="word-ipa">/wɑːʃ/</span>
+      <span class="word-zh">清洗</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="watch" data-letter="W" data-chinese="看" data-ipa="/wɑːtʃ/">
+      <span class="word-en">watch</span>
+      <span class="word-ipa">/wɑːtʃ/</span>
+      <span class="word-zh">看</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="water" data-letter="W" data-chinese="水" data-ipa="/ˈwɑː.t̬ɚ/">
+      <span class="word-en">water</span>
+      <span class="word-ipa">/ˈwɑː.t̬ɚ/</span>
+      <span class="word-zh">水</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="what" data-letter="W" data-chinese="什麼" data-ipa="/wɑːt/">
+      <span class="word-en">what</span>
+      <span class="word-ipa">/wɑːt/</span>
+      <span class="word-zh">什麼</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="靜音子音 (wh- 中 w 靜音)">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #6b21a8; margin-bottom: 6px; font-size: 14px;">靜音子音 (wh- 中 w 靜音)</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #6b21a8;">wh- 接字母 o 時，字母 w 不發音，僅發 /h/</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 2 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="who" data-letter="W" data-chinese="誰" data-ipa="/huː/">
+      <span class="word-en">who</span>
+      <span class="word-ipa">/huː/</span>
+      <span class="word-zh">誰</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="whose" data-letter="W" data-chinese="誰的" data-ipa="/huːz/">
+      <span class="word-en">whose</span>
+      <span class="word-ipa">/huːz/</span>
+      <span class="word-zh">誰的</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="category-row" data-category="靜音子音 (wr- 字首 w 靜音)">
+      <td style="vertical-align: top; width: 220px;">
+        <div style="font-weight: 700; color: #6b21a8; margin-bottom: 6px; font-size: 14px;">靜音子音 (wr- 字首 w 靜音)</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid #6b21a8;">wr- 開頭單字，字首 w 不發音，僅發 /r/ 音</div>
+        <div style="margin-top: 6px; font-size: 11px; color: #64748b; font-weight: 600;">共收錄 3 個單字</div>
+      </td>
+      <td style="vertical-align: top;">
+        <div class="exception-words-grid">
+          
+    <div class="exception-word-item" data-word="write" data-letter="W" data-chinese="寫" data-ipa="/raɪt/">
+      <span class="word-en">write</span>
+      <span class="word-ipa">/raɪt/</span>
+      <span class="word-zh">寫</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="writer" data-letter="W" data-chinese="作家" data-ipa="/ˈraɪ.t̬ɚ/">
+      <span class="word-en">writer</span>
+      <span class="word-ipa">/ˈraɪ.t̬ɚ/</span>
+      <span class="word-zh">作家</span>
+    </div>
+  
+    <div class="exception-word-item" data-word="wrong" data-letter="W" data-chinese="錯誤的" data-ipa="/rɑːŋ/">
+      <span class="word-en">wrong</span>
+      <span class="word-ipa">/rɑːŋ/</span>
+      <span class="word-zh">錯誤的</span>
+    </div>
+  
+        </div>
+      </td>
+    </tr>
+  
+      </tbody>
+    </table>
+  </div>
+
+  <div style="text-align: center; color: #64748b; font-size: 12px; margin-top: 30px; padding-bottom: 20px;">
+    EPRS (English Pronunciation Reasoning System) 英文發音知識系統 © 2026 | 100% 離線純規則引擎
+  </div>
+
+  <!-- 互動檢索與過濾 JavaScript -->
+  <script>
+    // 1. 全域搜尋功能
+    function performGlobalSearch(query) {
+      const q = query.trim().toLowerCase();
+      const rows = document.querySelectorAll('.searchable-row');
+      const exceptionItems = document.querySelectorAll('.exception-word-item');
+      const categoryRows = document.querySelectorAll('.category-row');
+      
+      let matchCount = 0;
+
+      if (!q) {
+        rows.forEach(r => r.style.display = '');
+        exceptionItems.forEach(item => item.style.display = '');
+        categoryRows.forEach(cr => cr.style.display = '');
+        document.getElementById('searchResultCount').textContent = '全字庫就緒';
+        return;
+      }
+
+      // 搜尋前三張工具表
+      rows.forEach(r => {
+        const text = r.textContent.toLowerCase();
+        if (text.includes(q)) {
+          r.style.display = '';
+          matchCount++;
+        } else {
+          r.style.display = 'none';
+        }
+      });
+
+      // 搜尋第四張例外工具表
+      categoryRows.forEach(cr => {
+        const catText = cr.dataset.category ? cr.dataset.category.toLowerCase() : '';
+        let hasVisibleWord = false;
+        const items = cr.querySelectorAll('.exception-word-item');
+        
+        items.forEach(item => {
+          const w = item.dataset.word || '';
+          const zh = item.dataset.chinese || '';
+          const ipa = item.dataset.ipa || '';
+          
+          if (w.includes(q) || zh.includes(q) || ipa.includes(q) || catText.includes(q)) {
+            item.style.display = '';
+            hasVisibleWord = true;
+            matchCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        if (hasVisibleWord || catText.includes(q)) {
+          cr.style.display = '';
+        } else {
+          cr.style.display = 'none';
+        }
+      });
+
+      document.getElementById('searchResultCount').textContent = '找到 ' + matchCount + ' 筆符合項目';
+    }
+
+    // 2. 字母篩選功能
+    let currentLetter = 'ALL';
+    function filterByLetter(letter) {
+      currentLetter = letter;
+      
+      // 更新按鈕樣式
+      document.querySelectorAll('.filter-letter-btn').forEach(btn => {
+        if (btn.dataset.letter === letter) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      const categoryRows = document.querySelectorAll('.category-row');
+      let visibleWordsCount = 0;
+
+      categoryRows.forEach(cr => {
+        let hasVisibleInCat = false;
+        const items = cr.querySelectorAll('.exception-word-item');
+        
+        items.forEach(item => {
+          const itemLetter = item.dataset.letter;
+          if (letter === 'ALL' || itemLetter === letter) {
+            item.style.display = '';
+            hasVisibleInCat = true;
+            visibleWordsCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        if (hasVisibleInCat) {
+          cr.style.display = '';
+        } else {
+          cr.style.display = 'none';
+        }
+      });
+
+      const countSpan = document.getElementById('searchResultCount');
+      if (letter === 'ALL') {
+        countSpan.textContent = '已顯示全部例外單字';
+      } else {
+        countSpan.textContent = '字母 ' + letter + ' 共 ' + visibleWordsCount + ' 個例外單字';
+      }
+    }
+
+    // 3. 字級大小切換控制
+    function setFontScale(scale) {
+      document.documentElement.style.setProperty('--font-scale', scale);
+      document.querySelectorAll('.font-btn').forEach(btn => btn.classList.remove('active'));
+      const idMap = {
+        '1': 'scaleBtn_100',
+        '1.15': 'scaleBtn_115',
+        '1.3': 'scaleBtn_130',
+        '1.45': 'scaleBtn_145',
+        '2': 'scaleBtn_200',
+      };
+      //alert('字級已調整為 ' + scale + ' 倍');
+      const activeId = idMap[String(scale)] || (scale === 1 ? 'scaleBtn_100' : 'scaleBtn_115');
+      const target = document.getElementById(activeId);
+      if (target) target.classList.add('active');
+      try { localStorage.setItem('eprs_font_scale', String(scale)); } catch(e) {}
+    }
+
+    // 初始化讀取使用者偏好字級大小
+    (function initSavedFontScale() {
+      try {
+        const saved = localStorage.getItem('eprs_font_scale');
+        if (saved) {
+          setFontScale(parseFloat(saved));
+          return;
+        }
+      } catch(e) {}
+      // 預設為 1.15 倍舒適放大字級
+      setFontScale(1.15);
+    })();
+  </script>
+
+</body></html>
