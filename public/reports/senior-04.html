@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EPRS 高中 Batch 04 發音推導報表 (離線模組化版)</title>
+  <link rel="stylesheet" href="../css/app.css">
+  <script src="../js/audio.js"></script>
+  <script src="../js/rules-data.js"></script>
+  <script src="../js/common.js"></script>
+  <script src="../data/senior-batch-04.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="app-header">
+      <div class="header-row">
+        <div>
+          <div class="nav-links" style="margin-bottom: 8px;">
+            <a href="../offline.html" class="btn btn-secondary">⬅ 返回主入口</a>
+            <a href="../rules.html" class="btn btn-secondary">📖 13 大發音規則表</a>
+            <span class="badge badge-emerald">高中英文第一級/第二級</span>
+            <span class="badge badge-slate" id="batchVersionBadge">載入中...</span>
+          </div>
+          <h1 style="font-size: 20px; font-weight: 800;" id="batchTitleText">
+            高中 Batch 04 自然發音規則推導報表
+          </h1>
+        </div>
+
+        <div class="nav-links no-print">
+          <select id="fontScaleSelect" class="btn btn-secondary" style="font-size: 12px; padding: 4px 8px;">
+            <option value="1">字級 100%</option>
+            <option value="1.15">字級 115%</option>
+            <option value="1.3">字級 130%</option>
+            <option value="1.5">字級 150%</option>
+          </select>
+          <button onclick="window.print()" class="btn btn-primary">🖨️ A4 橫向列印</button>
+        </div>
+      </div>
+
+      <div class="header-row no-print" style="margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px;">
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <input type="text" id="searchInput" placeholder="即時過濾單字 (如: student, apple)..." 
+                 oninput="window.EPRS_COMMON.filterTable(this.value)" 
+                 style="padding: 6px 12px; border: 1px solid var(--border); border-radius: 8px; width: 260px; font-size: 13px;">
+          <button onclick="document.getElementById('searchInput').value=''; window.EPRS_COMMON.filterTable('')" class="btn btn-secondary" style="padding: 6px 8px;">清除</button>
+        </div>
+
+        <div class="nav-links">
+          <a href="senior-03.html" class="btn btn-secondary">◀ 上一批次 (B03)</a>
+          <a href="senior-05.html" class="btn btn-emerald">下一批次 (B05) ▶</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 50px; text-align: center;">序號</th>
+            <th style="width: 140px;">單字 (Word)</th>
+            <th style="width: 100px;">音標 (IPA)</th>
+            <th style="width: 120px;">音節切分</th>
+            <th style="width: 140px;">自然發音規則推導</th>
+            <th>發音推導詳解與母音核心</th>
+            <th style="width: 110px;">中文釋義</th>
+          </tr>
+        </thead>
+        <tbody id="wordTableBody">
+          <!-- Populated by client script -->
+        </tbody>
+      </table>
+    </main>
+
+    <footer style="margin-top: 24px; text-align: center; font-size: 12px; color: var(--slate-500);">
+      EPRS 英文發音知識推導系統 · 100% 離線可用 · 零外部依賴
+    </footer>
+  </div>
+
+  <!-- Rule Modal -->
+  <div id="ruleModal" class="modal-backdrop" onclick="if(event.target===this) window.EPRS_COMMON.closeRuleModal()">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+        <h3 id="ruleModalTitle" style="font-size: 18px; font-weight: 800;">規則詳情</h3>
+        <button onclick="window.EPRS_COMMON.closeRuleModal()" class="btn btn-secondary" style="padding: 2px 8px;">✕</button>
+      </div>
+      <div style="background: var(--slate-100); padding: 10px 14px; border-radius: 8px; margin-bottom: 12px;">
+        <span style="font-size: 12px; color: var(--slate-500); font-weight: 600;">核心判定公式：</span>
+        <div id="ruleModalFormula" style="font-weight: 700; color: var(--primary); margin-top: 2px;"></div>
+      </div>
+      <p id="ruleModalDesc" style="font-size: 13px; color: var(--slate-700); line-height: 1.6; margin-bottom: 16px;"></p>
+      <div>
+        <span style="font-size: 12px; color: var(--slate-500); font-weight: 600; display: block; margin-bottom: 6px;">標準代表發音與範例單字：</span>
+        <div id="ruleModalExamples" style="display: flex; flex-wrap: wrap; gap: 4px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const data = window.EPRS_CURRENT_BATCH;
+      if (!data) return;
+
+      document.getElementById('batchVersionBadge').innerText = data.version || 'v1.5';
+      document.getElementById('batchTitleText').innerText = data.title;
+
+      const tbody = document.getElementById('wordTableBody');
+      tbody.innerHTML = data.words.map(w => {
+        const rules = (w.rules || []).map(r => 
+          '<button onclick="window.EPRS_COMMON.openRuleModal(\'' + r.ruleCode + '\')" class="badge badge-amber" style="cursor:pointer; border:none; margin:1px;" title="' + (r.ruleName || '') + '">' + 
+          r.ruleCode + '</button>'
+        ).join(' ');
+
+        const cleanWord = (w.word || '').replace(/['"]/g, '');
+
+        return '<tr>' +
+          '<td style="text-align:center; font-weight:700; color:var(--slate-500);">' + w.id + '</td>' +
+          '<td>' +
+            '<div style="display:flex; align-items:center; gap:6px;">' +
+              '<span style="font-weight:800; font-size:15px; color:var(--slate-900);">' + w.word + '</span>' +
+              '<button onclick="window.EPRS_AUDIO.play(\'' + cleanWord + '\', this)" class="btn-audio" title="點擊發音">🔊</button>' +
+            '</div>' +
+          '</td>' +
+          '<td style="font-family:monospace; color:#059669; font-weight:700;">' + (w.ipa || '') + '</td>' +
+          '<td style="color:#2563eb; font-weight:600;">' + (w.syllableDetail?.header || w.syllables?.join(' · ') || '') + '</td>' +
+          '<td>' + (rules || '<span class="badge badge-slate">標準推導</span>') + '</td>' +
+          '<td style="font-size:12px; color:var(--slate-600); line-height:1.4;">' + (w.phonicsDerivation || w.reasoning || w.vowelCore || '') + '</td>' +
+          '<td style="font-weight:600; color:var(--slate-800);">' + (w.chinese || '') + '</td>' +
+        '</tr>';
+      }).join('');
+    });
+  </script>
+</body>
+</html>
