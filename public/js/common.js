@@ -27,11 +27,80 @@
   // DOM Elements Cache
   const dom = {};
 
+  // Common UI utilities for batch reports and standalone pages
+  window.EPRS_COMMON = {
+    initFontScale: function() {
+      const scaleSelect = document.getElementById('fontScaleSelect') || document.getElementById('font-scale-select');
+      if (!scaleSelect) return;
+      try {
+        const saved = localStorage.getItem('eprs_font_scale') || '1';
+        scaleSelect.value = saved;
+        document.documentElement.style.setProperty('--font-scale', saved);
+      } catch (e) {}
+
+      scaleSelect.addEventListener('change', (e) => {
+        const val = e.target.value;
+        document.documentElement.style.setProperty('--font-scale', val);
+        try { localStorage.setItem('eprs_font_scale', val); } catch (e) {}
+      });
+    },
+    openRuleModal: function(ruleId) {
+      const modal = document.getElementById('ruleModal') || document.getElementById('rules-modal');
+      const titleEl = document.getElementById('ruleModalTitle') || document.getElementById('rule-modal-title');
+      const descEl = document.getElementById('ruleModalDesc') || document.getElementById('rule-modal-desc');
+      const formulaEl = document.getElementById('ruleModalFormula') || document.getElementById('rule-modal-formula');
+      const examplesEl = document.getElementById('ruleModalExamples') || document.getElementById('rule-modal-examples');
+      if (!modal) return;
+
+      const rule = (window.EPRS_RULES || []).find(r => r.id === ruleId);
+      if (!rule) return;
+
+      if (titleEl) titleEl.innerHTML = '<span class="badge badge-amber">' + rule.id + '</span> ' + rule.name + (rule.englishName ? ' (' + rule.englishName + ')' : '');
+      if (formulaEl) formulaEl.innerText = rule.formula || '無特定公式';
+      if (descEl) descEl.innerText = rule.description || rule.summary || '';
+
+      if (examplesEl && rule.examples) {
+        examplesEl.innerHTML = rule.examples.map(ex => 
+          '<span style="display:inline-block; background:#f1f5f9; padding:4px 8px; border-radius:6px; margin:2px; font-weight:600;">' + 
+          ex.word + ' <span style="color:#059669; font-family:monospace;">' + ex.ipa + '</span></span>'
+        ).join('');
+      }
+
+      modal.classList.add('open');
+      modal.style.display = 'flex';
+    },
+    closeRuleModal: function() {
+      const modal = document.getElementById('ruleModal') || document.getElementById('rules-modal');
+      if (modal) {
+        modal.classList.remove('open');
+        modal.style.display = 'none';
+      }
+    },
+    filterTable: function(searchTerm) {
+      const term = (searchTerm || '').toLowerCase().trim();
+      const rows = document.querySelectorAll('#wordTableBody tr, #words-table-body tr');
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        if (!term || text.includes(term)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+  };
+
   function init() {
     cacheDom();
-    bindEvents();
-    loadStoredPreferences();
-    loadCurrentBatch();
+    if (window.EPRS_COMMON && window.EPRS_COMMON.initFontScale) {
+      window.EPRS_COMMON.initFontScale();
+    }
+    const isPortal = !!(dom.wordsTableBody || dom.batchSelect);
+    if (isPortal) {
+      bindEvents();
+      loadStoredPreferences();
+      loadCurrentBatch();
+    }
   }
 
   function cacheDom() {
@@ -664,12 +733,11 @@
       // Interactive Syllables (Clickable to open Syllable Explainer)
       const rawSyllables = (w.syllables && w.syllables.length > 0) ? w.syllables : [{ text: w.word, isStressed: true, type: '單音節' }];
       const syllablesHtml = rawSyllables.map((s, sIdx) => 
-        `<button type="button" onclick="event.stopPropagation(); window.EPRS_APP.openSyllableExplainerModal('${s.text}', '${w.word}')" 
-          title="點擊查看「${s.text}」音節切割說明"
-          style="cursor: pointer; padding: 4px 12px; border-radius: 8px; font-weight: 800; font-size: 15px; transition: all 0.2s; background: ${s.isStressed ? '#fef3c7' : '#eff6ff'}; color: ${s.isStressed ? '#b45309' : '#1e40af'}; border: 1.5px solid ${s.isStressed ? '#fde68a' : '#bfdbfe'}; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+        `<button type="button" class="syllable-btn" onclick="event.stopPropagation(); window.EPRS_APP.openSyllableExplainerModal('${s.text}', '${w.word}')" 
+          title="點擊查看「${s.text}」音節切割說明">
           <span>${s.text}${s.isStressed ? ' ˈ' : ''}</span>
         </button>`
-      ).join(' <span style="color:#cbd5e1; font-weight:900; align-self:center;">·</span> ');
+      ).join(' <span style="color:#cbd5e1; font-weight:900; align-self:center; font-size:18px;">·</span> ');
 
       const syllablesContainer = document.getElementById('practice-syllables-btns') || document.getElementById('practice-syllables');
       if (syllablesContainer) syllablesContainer.innerHTML = syllablesHtml;

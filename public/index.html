@@ -2,8 +2,8 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EPRS 英文發音知識推導系統 - 100% 離線版</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>EPRS 英文發音知識推導系統 - 100% 離線純靜態版</title>
   <meta name="description" content="教育部國中 1200 與高中英文詞彙 · 100% 離線純規則自然發音推導與音訊系統">
   <link rel="stylesheet" href="./css/app.css">
   <!-- Load Core Rules, Matrix & Audio -->
@@ -179,109 +179,116 @@
     </footer>
   </div>
 
-  <!-- Modal: 5-Step Quick Practice (Aligned with Dynamic Design) -->
+  <!-- Modal: 5-Step Quick Practice (Completely Aligned with Dynamic Next.js Version) -->
   <div id="practice-modal" class="modal-backdrop">
-    <div class="modal-box" style="max-width: 720px; padding: 20px;">
-      <!-- Modal Header -->
-      <div class="modal-header" style="margin-bottom: 12px; padding-bottom: 10px;">
-        <div class="modal-title" style="font-size: 17px;">
-          <span style="color: #d97706;">⚡</span>
-          <span>EPRS 五步發音快速練習</span>
-          <span id="practice-unit-badge" class="badge badge-amber" style="font-size: 11px;">Unit 1 (1/20)</span>
+    <div class="modal-box practice-modal-box">
+      <!-- Modal Header (Dark Theme) -->
+      <div class="modal-header modal-header-dark" style="margin: 0; padding: 14px 18px; border-radius: 0;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="background: rgba(245, 158, 11, 0.25); border: 1px solid rgba(245, 158, 11, 0.4); padding: 5px 8px; border-radius: 8px; font-size: 16px;">⚡</span>
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <h3 style="font-size: 16px; font-weight: 800; color: #ffffff; margin: 0;">EPRS 五步發音快速練習</h3>
+              <span id="practice-unit-badge" class="badge badge-amber" style="font-size: 11px;">Unit 1 (1/20)</span>
+            </div>
+            <p style="font-size: 11px; color: #94a3b8; margin: 0; margin-top: 1px;">5-Stage Phonics Deduction Practice</p>
+          </div>
         </div>
         <button type="button" class="close-btn" onclick="window.EPRS_APP.closeModal(document.getElementById('practice-modal'))" title="關閉 (Esc)">✕</button>
       </div>
 
-      <!-- Practice Interactive Card (Click to advance, space to advance) -->
-      <div id="practice-card-box" class="practice-interactive-card" onclick="window.EPRS_APP.onPracticeCardClick(event)">
-        <!-- Top Status Bar inside Card -->
-        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding-bottom: 10px; border-bottom: 1px solid #f1f5f9; width: 100%;">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span id="p-card-progress" style="background: #dbeafe; color: #1e40af; font-weight: 800; padding: 3px 10px; border-radius: 9999px; border: 1px solid #bfdbfe; font-size: 11.5px;">
-              單元進度：第 1 / 20 字
-            </span>
-            <span id="p-card-id" style="background: #f1f5f9; color: #475569; font-weight: 600; padding: 2px 8px; border-radius: 9999px; font-size: 11px;">
-              ID: #1
-            </span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <div id="p-audio-status" style="display: none; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; color: #d97706; background: #fef3c7; border: 1px solid #fde68a; padding: 2px 8px; border-radius: 9999px;">
-              <span>🔊</span><span>發音中...</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 4px; font-size: 11px; color: #64748b; font-weight: 600;">
-              <span id="p-step-badge" class="badge badge-emerald" style="font-size: 10.5px;">階段 1 / 5</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Word Headline -->
-        <div style="padding-top: 14px; padding-bottom: 6px;">
-          <h2 id="practice-word" style="font-size: 44px; font-weight: 900; color: #0f172a; font-family: ui-serif, Georgia, serif; letter-spacing: -0.02em; margin: 0;">
-            word
-          </h2>
-        </div>
-
-        <!-- Middle Dynamic Section: Syllable Cutout, IPA & Reasoning Trigger -->
-        <div id="p-middle-section" style="margin: auto 0; padding: 14px 0; min-height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-          <!-- Syllable and IPA Content (Step >= 3) -->
-          <div id="p-syllables-revealed" style="display: none; flex-direction: column; align-items: center; gap: 10px; width: 100%;">
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
-              <span style="font-size: 11px; font-weight: 700; color: #64748b; display: flex; align-items: center; gap: 4px;">
-                <span>✂️</span> <span>音節切割 (點擊各音節看切分說明)：</span>
+      <!-- Practice Interactive Card Body -->
+      <div class="practice-card-body">
+        <div id="practice-card-box" class="practice-interactive-card" onclick="window.EPRS_APP.onPracticeCardClick(event)">
+          <!-- Top Status Bar inside Card -->
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding-bottom: 10px; border-bottom: 1px solid #f1f5f9; width: 100%; flex-wrap: wrap; gap: 6px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span id="p-card-progress" style="background: #dbeafe; color: #1e40af; font-weight: 800; padding: 3px 10px; border-radius: 9999px; border: 1px solid #bfdbfe; font-size: 11.5px;">
+                單元進度：第 1 / 20 字
               </span>
-              <div id="practice-syllables-btns" style="display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap;">
-                <!-- Syllable Interactive Buttons -->
+              <span id="p-card-id" style="background: #f1f5f9; color: #475569; font-weight: 600; padding: 2px 8px; border-radius: 9999px; font-size: 11px;">
+                ID: #1
+              </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <div id="p-audio-status" style="display: none; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; color: #d97706; background: #fef3c7; border: 1px solid #fde68a; padding: 2px 8px; border-radius: 9999px;">
+                <span>🔊</span><span>發音中...</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 4px; font-size: 11px; color: #64748b; font-weight: 600;">
+                <span id="p-step-badge" class="badge badge-emerald" style="font-size: 10.5px;">階段 1 / 5</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Word Headline -->
+          <div style="padding-top: 16px; padding-bottom: 8px;">
+            <h2 id="practice-word" class="practice-word-heading" style="margin: 0;">
+              word
+            </h2>
+          </div>
+
+          <!-- Middle Dynamic Section: Syllable Cutout, IPA & Reasoning Trigger -->
+          <div id="p-middle-section" style="margin: auto 0; padding: 12px 0; min-height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <!-- Syllable and IPA Content (Step >= 3) -->
+            <div id="p-syllables-revealed" style="display: none; flex-direction: column; align-items: center; gap: 10px; width: 100%;">
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+                <span style="font-size: 11px; font-weight: 700; color: #64748b; display: flex; align-items: center; gap: 4px;">
+                  <span>✂️</span> <span>音節切割 (點擊各音節看切分說明)：</span>
+                </span>
+                <div id="practice-syllables-btns" style="display: flex; justify-content: center; align-items: center; gap: 6px; flex-wrap: wrap;">
+                  <!-- Syllable Interactive Buttons -->
+                </div>
+              </div>
+
+              <!-- IPA and Reasoning Buttons -->
+              <div style="display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 4px;">
+                <button type="button" id="p-ipa-btn" class="btn btn-secondary btn-sm" style="font-family: monospace; font-size: 13.5px; font-weight: bold; color: #1e40af; background: #f8fafc; border-radius: 9999px; padding: 4px 14px; min-height: 36px;" onclick="event.stopPropagation(); window.EPRS_APP.playCurrentPracticeWord();" title="點擊聆聽標準發音">
+                  <span>🔊</span> <span id="practice-ipa-text">[/ipa/]</span>
+                </button>
+                <button type="button" class="reasoning-pill-btn" onclick="event.stopPropagation(); window.EPRS_APP.openPracticeReasoningModal();" title="點擊查看完整發音推導與規則依據">
+                  <span>✨</span> <span>〔推理〕</span>
+                </button>
               </div>
             </div>
 
-            <!-- IPA and Reasoning Buttons -->
-            <div style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 4px;">
-              <button type="button" id="p-ipa-btn" class="btn btn-secondary btn-sm" style="font-family: monospace; font-size: 14px; font-weight: bold; color: #1e40af; background: #f8fafc; border-radius: 9999px; padding: 4px 14px;" onclick="event.stopPropagation(); window.EPRS_APP.playCurrentPracticeWord();" title="點擊聆聽標準發音">
-                <span>🔊</span> <span id="practice-ipa-text">[/ipa/]</span>
-              </button>
-              <button type="button" class="reasoning-pill-btn" onclick="event.stopPropagation(); window.EPRS_APP.openPracticeReasoningModal();" title="點擊查看完整發音推導與規則依據">
-                <span>✨</span> <span>〔推理〕</span>
-              </button>
+            <!-- Step 1 & 2 Placeholder -->
+            <div id="p-syllables-placeholder" style="display: flex; flex-direction: column; align-items: center; justify-content: center; color: #94a3b8; padding: 8px 0;">
+              <div style="width: 40px; height: 3px; background: #e2e8f0; border-radius: 9999px; margin-bottom: 8px;"></div>
+              <span id="p-placeholder-hint" style="font-size: 12px; color: #64748b; text-align: center;">
+                請先看單字思考發音與詞義，下一步揭曉中文
+              </span>
             </div>
           </div>
 
-          <!-- Step 1 & 2 Placeholder -->
-          <div id="p-syllables-placeholder" style="display: flex; flex-direction: column; align-items: center; justify-content: center; color: #94a3b8; padding: 10px 0;">
-            <div style="width: 40px; height: 3px; background: #e2e8f0; border-radius: 9999px; margin-bottom: 8px;"></div>
-            <span id="p-placeholder-hint" style="font-size: 12px; color: #64748b;">
-              請先看單字思考發音與詞義，下一步揭曉中文
-            </span>
-          </div>
-        </div>
-
-        <!-- Bottom Row: Chinese Meaning -->
-        <div style="width: 100%; padding-top: 14px; border-top: 1px solid #f1f5f9; min-height: 56px; display: flex; align-items: center; justify-content: center;">
-          <div id="practice-chinese-box" style="display: none; align-items: center; justify-content: center; gap: 8px;">
-            <span id="practice-pos" class="badge badge-amber" style="font-size: 12px; padding: 3px 8px;">n.</span>
-            <span id="practice-chinese" style="font-size: 24px; font-weight: 800; color: #1e293b; letter-spacing: 0.02em;">
-              中文釋義
-            </span>
-          </div>
-          <div id="practice-chinese-placeholder" style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #64748b; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 9999px; padding: 4px 16px;">
-            <span>👁️</span>
-            <span>最後一行 中文：點擊卡片或按 <kbd style="background:#fff; border:1px solid #cbd5e1; border-radius:4px; padding:1px 5px; font-size:11px; font-weight:bold;">空白鍵</kbd> 揭曉</span>
+          <!-- Bottom Row: Chinese Meaning -->
+          <div style="width: 100%; padding-top: 12px; border-top: 1px solid #f1f5f9; min-height: 52px; display: flex; align-items: center; justify-content: center;">
+            <div id="practice-chinese-box" style="display: none; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
+              <span id="practice-pos" class="badge badge-amber" style="font-size: 12px; padding: 2px 7px;">n.</span>
+              <span id="practice-chinese" style="font-size: 22px; font-weight: 800; color: #1e293b; letter-spacing: 0.02em;">
+                中文釋義
+              </span>
+            </div>
+            <div id="practice-chinese-placeholder" style="display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: #64748b; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 9999px; padding: 4px 14px; text-align: center;">
+              <span>👁️</span>
+              <span>最後一行 中文：點擊卡片或按「下一步」揭曉</span>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Footer Controls Bar -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; gap: 10px;">
-        <button type="button" class="btn btn-secondary" onclick="window.EPRS_APP.changePracticeWord(-1)">
+      <div class="practice-footer-bar">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="window.EPRS_APP.changePracticeWord(-1)" style="min-height: 38px;">
           ◀ 上一個
         </button>
-        <div id="practice-step-hint" style="font-size: 12px; font-weight: bold; color: #475569; text-align: center;">
+        <div id="practice-step-hint" style="font-size: 12px; font-weight: bold; color: #475569; text-align: center; flex: 1;">
           步驟 1/5：請先嘗試自己推導此單字之發音
         </div>
-        <div style="display: flex; gap: 8px;">
-          <button type="button" class="btn btn-amber" style="padding: 8px 20px; font-size: 14px;" onclick="window.EPRS_APP.nextPracticeStep()">
+        <div style="display: flex; gap: 6px; align-items: center;">
+          <button type="button" class="btn btn-amber" style="padding: 6px 16px; font-size: 13.5px; min-height: 38px;" onclick="window.EPRS_APP.nextPracticeStep()">
             下一步 (Space) ➔
           </button>
-          <button type="button" class="btn btn-secondary" onclick="window.EPRS_APP.changePracticeWord(1)">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="window.EPRS_APP.changePracticeWord(1)" style="min-height: 38px;">
             下一個 ▶
           </button>
         </div>
@@ -292,14 +299,14 @@
   <!-- Modal: 4-Tab Syllable & IPA Matrix Tool (音節矩陣與工具表) -->
   <div id="matrix-modal" class="modal-backdrop">
     <div class="modal-box" style="max-width: 960px;">
-      <div class="modal-header modal-header-dark" style="margin: -20px -24px 16px -24px; padding: 18px 24px; border-radius: 19px 19px 0 0;">
+      <div class="modal-header modal-header-dark" style="margin: -16px -16px 14px -16px; padding: 14px 18px; border-radius: 15px 15px 0 0;">
         <div style="display: flex; align-items: center; gap: 12px;">
           <div style="background: rgba(59, 130, 246, 0.25); border: 1px solid rgba(59, 130, 246, 0.4); padding: 6px 10px; border-radius: 10px; color: #93c5fd; font-size: 18px;">
             📊
           </div>
           <div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-              <span style="font-weight: 800; font-size: 18px; color: #ffffff;">音節切分與音標推導查詢工具表</span>
+              <span style="font-weight: 800; font-size: 17px; color: #ffffff;">音節切分與音標推導查詢工具表</span>
               <span style="font-size: 11px; font-weight: 700; background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 8px; border-radius: 9999px;">
                 100% 離線純規則引擎
               </span>
@@ -338,12 +345,12 @@
   <!-- Modal: Syllable Segmentation Breakdown (自然發音音節切割詳解) -->
   <div id="syllable-explainer-modal" class="modal-backdrop">
     <div class="modal-box" style="max-width: 620px;">
-      <div class="modal-header modal-header-dark" style="margin: -20px -24px 16px -24px; padding: 18px 24px; border-radius: 19px 19px 0 0;">
+      <div class="modal-header modal-header-dark" style="margin: -16px -16px 14px -16px; padding: 14px 18px; border-radius: 15px 15px 0 0;">
         <div class="modal-title" style="color: #fff; display: flex; align-items: center; gap: 10px;">
-          <span style="background: rgba(59,130,246,0.25); border: 1px solid rgba(59,130,246,0.4); padding: 6px 10px; border-radius: 10px; font-size: 18px;">✂️</span>
+          <span style="background: rgba(59,130,246,0.25); border: 1px solid rgba(59,130,246,0.4); padding: 5px 8px; border-radius: 8px; font-size: 16px;">✂️</span>
           <div>
-            <div style="font-size: 17px; font-weight: 800;">自然發音音節切割詳解</div>
-            <div style="font-size: 11.5px; color: #94a3b8; font-family: monospace;">EPRS Syllable Segmentation Breakdown</div>
+            <div style="font-size: 16px; font-weight: 800;">自然發音音節切割詳解</div>
+            <div style="font-size: 11px; color: #94a3b8; font-family: monospace;">EPRS Syllable Segmentation Breakdown</div>
           </div>
         </div>
         <button type="button" class="close-btn" onclick="window.EPRS_APP.closeModal(document.getElementById('syllable-explainer-modal'))" title="關閉 (Esc)">✕</button>
@@ -358,12 +365,12 @@
   <!-- Modal: Pronunciation Reasoning & Deduction Chain (發音推理詳解) -->
   <div id="reasoning-modal" class="modal-backdrop">
     <div class="modal-box" style="max-width: 660px;">
-      <div class="modal-header modal-header-dark" style="margin: -20px -24px 16px -24px; padding: 18px 24px; border-radius: 19px 19px 0 0;">
+      <div class="modal-header modal-header-dark" style="margin: -16px -16px 14px -16px; padding: 14px 18px; border-radius: 15px 15px 0 0;">
         <div class="modal-title" style="color: #fff; display: flex; align-items: center; gap: 10px;">
-          <span style="background: rgba(99,102,241,0.25); border: 1px solid rgba(99,102,241,0.4); padding: 6px 10px; border-radius: 10px; font-size: 18px;">✨</span>
+          <span style="background: rgba(99,102,241,0.25); border: 1px solid rgba(99,102,241,0.4); padding: 5px 8px; border-radius: 8px; font-size: 16px;">✨</span>
           <div>
-            <div style="font-size: 17px; font-weight: 800;">EPRS 發音推導演算與推理依據</div>
-            <div style="font-size: 11.5px; color: #94a3b8; font-family: monospace;">Pronunciation Deduction Chain & Phonics Reasoning</div>
+            <div style="font-size: 16px; font-weight: 800;">EPRS 發音推導演算與推理依據</div>
+            <div style="font-size: 11px; color: #94a3b8; font-family: monospace;">Pronunciation Deduction Chain & Phonics Reasoning</div>
           </div>
         </div>
         <button type="button" class="close-btn" onclick="window.EPRS_APP.closeModal(document.getElementById('reasoning-modal'))" title="關閉 (Esc)">✕</button>
@@ -387,14 +394,14 @@
   <!-- Modal: Version Control & Governance (版本規範與治理矩陣) -->
   <div id="version-modal" class="modal-backdrop">
     <div class="modal-box" style="max-width: 820px;">
-      <div class="modal-header modal-header-dark" style="margin: -20px -24px 16px -24px; padding: 18px 24px; border-radius: 19px 19px 0 0;">
+      <div class="modal-header modal-header-dark" style="margin: -16px -16px 14px -16px; padding: 14px 18px; border-radius: 15px 15px 0 0;">
         <div style="display: flex; align-items: center; gap: 12px;">
           <div style="background: rgba(16, 185, 129, 0.25); border: 1px solid rgba(16, 185, 129, 0.4); padding: 6px 10px; border-radius: 10px; color: #6ee7b7; font-size: 18px;">
             🌿
           </div>
           <div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-              <span style="font-weight: 800; font-size: 18px; color: #ffffff;">EPRS 雙軌版本控制與規格中心</span>
+              <span style="font-weight: 800; font-size: 17px; color: #ffffff;">EPRS 雙軌版本控制與規格中心</span>
               <span style="font-size: 11px; font-weight: 700; background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4); padding: 2px 8px; border-radius: 9999px;">
                 Dual-Track Versioning
               </span>
